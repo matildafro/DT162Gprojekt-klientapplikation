@@ -1,24 +1,24 @@
 <template>
+  <!--läser in header-->
 <Header />
+<!--läser in AddInsert-->
 <AddInsert @insertAdded="getInserts()" />
 <div class="content">
   <h2>Sammanställning av kurser:</h2>
   <p>Behöver du ändra en inlagd kurs? Tryck på textfältet och sedan uppdatera-knappen.</p>
-  <p id="messageGet"></p>
+  <p id="messageGet"></p><!--meddelande om kurs ändrats eller raderats-->
 <table>
-  
   <th>Kursnamn</th>
   <th>Universitet</th>
   <th>Inriktning</th>
   <th>Poäng</th>
   <th>Uppdatera</th>
   <th>Radera</th>
-
-
+  <!--läser in GetList och loopar igenom objekt inserts-->
   <GetList @deleteInsert="deleteInsert(insert._id)" @updateInsert="updateInsert(insert._id)" v-for="insert in inserts" :insert="insert" :key="insert._id"/>
 
 </table>
-
+<!--läser ut poängsammanställning-->
 <div id="getPoints"></div>
 </div>
 
@@ -31,7 +31,7 @@ import GetList from './components/GetList.vue'
 import AddInsert from './components/AddInsert.vue'
 
 export default {
-    // Reaktiv data
+    // objekt sparas som tom array
     data() {
         return {
             inserts: [],
@@ -43,7 +43,7 @@ export default {
         Header 
     },
 
-    //Funktioner
+    //funktioner som använfs
     methods: {
 
     //GET
@@ -59,7 +59,7 @@ export default {
         const data = await resp.json();
         this.inserts = data;
 
-        //HÄMTA POINTS
+        //HÄMTA POINTS OCH LÄS UT
         let sum = 0;
         for (let i = 0; i < data.length; i++)
         {
@@ -85,7 +85,7 @@ async deleteInsert(_id) {
       this.getInserts();
       document.getElementById("messageGet").innerHTML = "<p>" + "Kurs raderad!" + "</p>";
 },
-//UPDATE
+//Uppdatera - UPDATE
 async updateInsert(_id) {
   let updName = document.getElementById("name" + _id).innerHTML;
   let updUni = document.getElementById("uni" + _id).innerHTML;

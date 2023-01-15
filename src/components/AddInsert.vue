@@ -1,6 +1,6 @@
 <template>
     <div>
-    
+    <!--förhindrar att sidan läses om-->
     <form @submit.prevent="addInsert()">
         <h2>Börja med att lägga till dina lästa kurser</h2>
         <p id="message"></p>
@@ -24,9 +24,9 @@
 </template>
 
 <script>
-    //Komponent
     export default {
         data() {
+            //returnerar input-fält som tomma strängar 
             return {
                 name: "",
                 uni: "",
@@ -39,7 +39,7 @@
             async addInsert() {
                //Kontrollerar att fälten är ifyllda
                if(this.name != 0 & this.uni != 0 & this.orient != 0 & this.points != 0) { 
-                    //Javascript objekt
+                    //Skapar objekt av det som står i fälten med hjälp av this
                     let InsertBody = {
                         name: this.name,
                         uni: this.uni,
@@ -57,21 +57,19 @@
                         body: JSON.stringify(InsertBody)
                     });
                     const data = await resp.json();
-                    /*Töm fälten efter lagring*/
+                    //tömmer input-fält efter data har skickats
                     this.name = "";
                     this.uni = "";
                     this.orient = "";
                     this.points = ""; 
 
                    
-                    //Emit för att ladda om sidan
+                    //emit för att ladda om sidan
                     this.$emit("insertAdded");
-                
+                    //läser ut meddelande att kurs är tillagd
                     document.getElementById("message").innerHTML = "<p>" + "Kurs tillagd till listan!" + "</p>";
 
-
-                    
-                }else {
+                }else { //felmeddelande om fält är tomma
                     document.getElementById("message").innerHTML = "<p>" + "Vänligen fyll i all information om kursen!" + "</p>";
                 }
             },

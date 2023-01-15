@@ -1,6 +1,6 @@
 <template>
     <tbody>
-        <tr>
+        <tr> <!--binder data med id samt utläst kurs eget id-->
             <td v-bind:id="'name'+ insert._id" contenteditable>{{ insert.name }}</td>
             <td v-bind:id="'uni'+ insert._id" contenteditable>{{ insert.uni }}</td>
             <td v-bind:id="'orient'+ insert._id" contenteditable>{{ insert.orient }}</td>
@@ -15,7 +15,7 @@
 <script> 
     export default {
        
-        props: {
+        props: { //skapar ett js-objekt av insert
             insert: Object
         },
         emits: ["deleteInsert", "updateInsert"]
